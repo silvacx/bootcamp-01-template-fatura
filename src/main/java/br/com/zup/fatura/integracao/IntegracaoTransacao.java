@@ -21,6 +21,6 @@ public class IntegracaoTransacao {
     @Transactional
     public void ouvirKafka(TransacaoListener response) {
         Assert.notNull(response, "A resposta de transação não pode ser nula");
-        entityManager.persist(response.toModel());
+        entityManager.persist(response.toTransacao());
     }
 }

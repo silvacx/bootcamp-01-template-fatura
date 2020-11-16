@@ -28,7 +28,7 @@ public class TransacaoController {
         this.quantidadeMaximaDeResultados = quantidadeMaximaDeResultados;
     }
 
-    @GetMapping("/{cartaoID}")
+   /* @GetMapping("/{cartaoID}")
     public ResponseEntity consultarTransacoesDoCartao(@PathVariable UUID cartaoID){
         List<Transacao> transacoes = entityManager.createNamedQuery("findTransacoesPorCartao", Transacao.class)
                 .setParameter("cartaoID", cartaoID)
@@ -42,5 +42,5 @@ public class TransacaoController {
         }
 
         return ResponseEntity.ok(Transacao.toResponseList(transacoes));
-    }
+    }*/
 }

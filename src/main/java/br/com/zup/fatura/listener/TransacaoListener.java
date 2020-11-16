@@ -18,7 +18,7 @@ public class TransacaoListener {
 
     private LocalDateTime efetivadaEm;
 
-    public Transacao toModel(){
-        return new Transacao(id, valor, estabelecimentoListener.toModel(), cartaoListener.toModel(), efetivadaEm);
+    public Transacao toTransacao(){
+        return new Transacao(this.id, this.valor, this.estabelecimentoListener.toModel(), this.efetivadaEm);
     }
 }

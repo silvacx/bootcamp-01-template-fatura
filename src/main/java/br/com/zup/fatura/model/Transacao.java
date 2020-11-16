@@ -9,13 +9,11 @@ import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
-@NamedQuery(
-        name = "findTransacoesPorCartao",
-        query = "SELECT t FROM Transacao t WHERE t.cartao.cartaoID = :cartaoID ORDER BY efetivadaEm DESC")
 public class Transacao {
 
     @Id
@@ -29,35 +27,41 @@ public class Transacao {
     @Positive
     private BigDecimal valor;
 
-    @NotNull
     @Embedded
     private Estabelecimento estabelecimento;
 
     @NotNull
-    @Embedded
-    private Cartao cartao;
-
-    @NotNull
-        private LocalDateTime efetivadaEm;
+    private LocalDateTime efetivadaEm;
 
     @Deprecated
     public Transacao() {
     }
 
-    public Transacao(@NotNull UUID transacaoID, @NotNull @Positive BigDecimal valor, @NotNull Estabelecimento estabelecimento, @NotNull Cartao cartao, @NotNull LocalDateTime efetivadaEm) {
+    public Transacao(UUID transacaoID, BigDecimal valor, Estabelecimento estabelecimento, LocalDateTime efetivadaEm) {
         this.transacaoID = transacaoID;
         this.valor = valor;
         this.estabelecimento = estabelecimento;
-        this.cartao = cartao;
         this.efetivadaEm = efetivadaEm;
     }
 
-    public TransacaoResponse toResponse(){
-        return new TransacaoResponse(this.valor, this.estabelecimento.toResponse(), this.cartao.toResponse(), this.efetivadaEm);
+    public Integer retornarMesDaTransacao() {
+        return efetivadaEm.getMonthValue();
     }
 
-    public static List<TransacaoResponse> toResponseList(List<Transacao> transacoes){
-        Assert.notNull(transacoes, "A lista de transações não pode ser nula");
-        return transacoes.stream().map(Transacao::toResponse).collect(Collectors.toList());
+    public Integer retornarAnoDaTransacao() {
+        return efetivadaEm.getYear();
+    }
+
+    public BigDecimal retornarValorDaTransacao() {
+        return valor;
+    }
+
+    public TransacaoResponse toResponse(){
+        return new TransacaoResponse(this.valor, this.estabelecimento.toResponse(), this.efetivadaEm);
+    }
+
+    public static Set<TransacaoResponse> toResponseSet(Set<Transacao> transacoes){
+        Assert.notNull(transacoes, "Não é possível fazer a conversão de uma lista nula");
+        return transacoes.stream().map(Transacao::toResponse).collect(Collectors.toSet());
     }
 }

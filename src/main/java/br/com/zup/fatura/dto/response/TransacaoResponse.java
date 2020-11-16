@@ -6,21 +6,24 @@ import java.time.LocalDateTime;
 public class TransacaoResponse {
 
     private BigDecimal valor;
-
-    private EstabelecimentoResponse estabelecimentoResponse;
-
-    private CartaoResponse cartaoResponse;
-
+    private EstabelecimentoResponse estabelecimento;
     private LocalDateTime efetivadaEm;
 
-    @Deprecated
-    public TransacaoResponse() {
+    public TransacaoResponse(BigDecimal valor, EstabelecimentoResponse estabelecimento, LocalDateTime efetivadaEm) {
+        this.valor = valor;
+        this.estabelecimento = estabelecimento;
+        this.efetivadaEm = efetivadaEm;
     }
 
-    public TransacaoResponse(BigDecimal valor, EstabelecimentoResponse estabelecimentoResponse, CartaoResponse cartaoResponse, LocalDateTime efetivadaEm) {
-        this.valor = valor;
-        this.estabelecimentoResponse = estabelecimentoResponse;
-        this.cartaoResponse = cartaoResponse;
-        this.efetivadaEm = efetivadaEm;
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public EstabelecimentoResponse getEstabelecimento() {
+        return estabelecimento;
+    }
+
+    public LocalDateTime getEfetivadaEm() {
+        return efetivadaEm;
     }
 }
